@@ -1,0 +1,1 @@
+ASSEMBLIES_PATH = "Libs"

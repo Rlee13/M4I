@@ -1,0 +1,57 @@
+from M4I import Matrix3, Vector3, Precision, Roots, SG
+
+O = Matrix3(0)
+P = Matrix3(1)
+R = Vector3(0)
+print(O)
+print(P)
+print(R)
+
+O[0,0]=13.0
+O[0,1]=17.0
+O[1,0]=15.0
+O[2,2]=19.0
+
+R[0]=23.0
+R[1]=27.0
+R[2]=25.0
+
+print(O)
+print(O.row_count, "x", O.column_count)
+
+print(O.inverse())
+
+print(O.determinant())
+
+print(O * R)
+
+print("TYPE::", type(O))
+print("ISINSTANCE of Matrix3::", isinstance(O, Matrix3))
+
+print(O - P)
+
+input("Press any key to continue...")
+
+O.from_list([[1,1,1],
+             [1,2,3],
+             [4,3,2]])
+
+print(O)
+
+R = Vector3([0.0,1.0,2.0])
+print(R)
+
+print("Precision.DOUBLE_DECIMAL_PLACES    ", Precision.DOUBLE_DECIMAL_PLACES)
+print("Precision.DOUBLE_PRECISION         ", Precision.DOUBLE_PRECISION)
+print("Precision.MACHINE_EPS              ", Precision.MACHINE_EPS)
+print("Precision.POSITIVE_DOUBLE_PRECISION", Precision.POSITIVE_DOUBLE_PRECISION)
+print("Precision.POSITIVE_SINGLE_PRECISION", Precision.POSITIVE_SINGLE_PRECISION)
+print("Precision.POSITIVE_MACHINE_EPS     ", Precision.POSITIVE_MACHINE_EPS)
+print("Precision.SINGLE_DECIMAL_PLACES    ", Precision.SINGLE_DECIMAL_PLACES)
+print("Precision.SINGLE_PRECISION         ", Precision.SINGLE_PRECISION)
+
+R = Roots(0)
+  # x^2 + x -2
+print(R.quadratic(1, 1, -2))
+  # x^3 -3x^2 -6x +8   
+print(R.cubic(1, -3, -6, 8))
