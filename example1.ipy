@@ -1,4 +1,4 @@
-from M4I import Matrix3, Vector3, Precision, Roots, SG
+from M4I import Matrix3, Matrix4, Vector3, Precision, Roots, SG
 
 O = Matrix3(0)
 P = Matrix3(1)
@@ -7,18 +7,19 @@ print(O)
 print(P)
 print(R)
 
-O[0,0]=13.0
-O[0,1]=17.0
-O[1,0]=15.0
-O[2,2]=19.0
+O[0,0] = 13.0
+O[0,1] = 17.0
+O[1,0] = 15.0
+O[2,2] = 19.0
 
-R[0]=23.0
-R[1]=27.0
-R[2]=25.0
+R[0] = 23.0
+R[1] = 27.0
+R[2] = 25.0
 
 print(O)
 print(O.row_count, "x", O.column_count)
 
+print("="*70)
 print(O.inverse())
 
 print(O.determinant())
@@ -30,7 +31,7 @@ print("ISINSTANCE of Matrix3::", isinstance(O, Matrix3))
 
 print(O - P)
 
-input("Press any key to continue...")
+ret = input("Press any key to continue...")
 
 O.from_list([[1,1,1],
              [1,2,3],
@@ -40,6 +41,26 @@ print(O)
 
 R = Vector3([0.0,1.0,2.0])
 print(R)
+
+S = Matrix4(1.0)
+print(S)
+
+S.from_list([[1,1,1,2],
+             [1,2,3,5],
+             [4,3,2,6],
+             [9,2,4,5]
+             ])
+
+print(S)
+print(S.row_count, "x", S.column_count)
+print(S.range(), " -  ", S.rank())
+
+print("="*70)
+print(S.I())
+
+print(S.determinant())
+
+ret = input("Press any key to continue...")
 
 print("Precision.DOUBLE_DECIMAL_PLACES    ", Precision.DOUBLE_DECIMAL_PLACES)
 print("Precision.DOUBLE_PRECISION         ", Precision.DOUBLE_PRECISION)

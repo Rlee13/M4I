@@ -1,0 +1,10 @@
+# use this file only with IronPython 2.7
+
+import clr, sys, os
+
+clr.CompileModules("../Libs/M4I.dll", 
+                   "__init__.py", "m4i_matrix.py",
+                   "m4i_precision.py", "m4i_root_finding.py",
+                   "m4i_settings.py", "m4i_vector.py")
+
+clr.AddReferenceToFileAndPath('../Libs/M4I.dll')

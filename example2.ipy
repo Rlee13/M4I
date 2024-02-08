@@ -1,0 +1,7 @@
+# Only for IronPython 2.7
+
+import clr, sys, os
+
+clr.AddReferenceToFileAndPath('./Libs/M4I.dll')
+from M4I import m4i_matrix as MT
+print(dir(MT))
