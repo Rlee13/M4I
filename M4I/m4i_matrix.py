@@ -68,12 +68,6 @@ class MatrixD3x3(M4I_Matrix):
         self.__column_count = 3
         self.__row_count = 3
 
-        # self.I = self.Inverse
-        # self.inverse = self.Inverse
-
-        # self.D = self.Determinant
-        # self.determinant = self.Determinant        
-
     #def __repr__(self):
     #    return "Test()"
 
@@ -107,14 +101,6 @@ class MatrixD3x3(M4I_Matrix):
     #    #for j in range(3):
     #        self.Row(i).print_vector()
 
-    # def inverse(self):
-    #     _mat = self.Inverse()
-    #     return _mat
-
-    # def determinant(self):
-    #     _mat = self.Determinant()
-    #     return _mat
-
     def clear(self):
         self.ClearRow(0); self.ClearRow(1); self.ClearRow(2)
         return self
@@ -126,8 +112,7 @@ class MatrixD3x3(M4I_Matrix):
             len(alist[1]) != 3 or \
             len(alist[2]) != 3 :
                 raise IndexError('List should be 3x3')
-                #print errorStrings[0]
-                #sys.exit()
+
         for i, row in enumerate(alist):
             for j, col in enumerate(row):
                 self[i, j] = col
@@ -152,20 +137,10 @@ class MatrixD4x4(M4I_Matrix):
             self[3,0] = arg0[3][0]; self[3,1] = arg0[3][1]; self[3,2] = arg0[3][2]; self[3,3] = arg0[3][3]
         elif type(arg0) == int or type(arg0) == float:
             super(MatrixD4x4, self).__init__(4, 4, arg0)
-            # self[0,0] = arg0; self[0,1] = arg0; self[0,2] = arg0; self[0,3] = arg0
-            # self[1,0] = arg0; self[1,1] = arg0; self[1,2] = arg0; self[1,3] = arg0
-            # self[2,0] = arg0; self[2,1] = arg0; self[2,2] = arg0; self[2,3] = arg0
-            # self[3,0] = arg0; self[3,1] = arg0; self[3,2] = arg0; self[3,3] = arg0
         else:
             raise IndexError("The list should be 4x4, or the argument should be int or float.")
         self.__column_count = 4
         self.__row_count = 4
-
-        # self.I = self.Inverse
-        # self.inverse = self.Inverse
-
-        # self.D = self.Determinant
-        # self.determinant = self.Determinant
 
     #def __repr__(self):
     #    return "Test()"
@@ -184,23 +159,9 @@ class MatrixD4x4(M4I_Matrix):
     def row_count(self):
         return self.__row_count
 
-    # def inverse(self):
-    #     _mat = self.Inverse()
-    #     return _mat
-
-    # def determinant(self):
-    #     _mat = self.Determinant()
-    #     return _mat
-
     def clear(self):
         self.ClearRow(0); self.ClearRow(1); self.ClearRow(2); self.ClearRow(3)
         return self
-    
-    # def rank(self):
-    #     return self.Rank()
-
-    # def range(self):
-    #     return self.Range()
 
     def from_list(self, alist):
         if not type(alist) == list or \

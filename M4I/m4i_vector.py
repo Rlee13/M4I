@@ -59,9 +59,7 @@ class Vector3(M4I_Vector):
     #     return _mat
 
     #/** Print the vector X */
-    #def printVector(prompt, X): 
     def print_vector(self): 
-        #print (prompt)
         for n in self:
             print("\t" + n.ToString())
     
@@ -69,8 +67,7 @@ class Vector3(M4I_Vector):
         if not type(alist) == list or \
             len(alist) != 3:
                 raise IndexError('List should have 3 elements')
-                #print errorStrings[0]
-                #sys.exit()
+
         for i, row in enumerate(alist):
             for j, col in enumerate(row):
                 self[i, j] = col
