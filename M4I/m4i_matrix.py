@@ -17,9 +17,9 @@ except IOError:
     sys.exit()
 
 
-from MathNet import Numerics
-from MathNet.Numerics import Control,LinearAlgebra
-from MathNet.Numerics.LinearAlgebra.Double import DenseMatrix
+from MathNet import Numerics  # type: ignore
+from MathNet.Numerics import Control,LinearAlgebra  # type: ignore
+from MathNet.Numerics.LinearAlgebra.Double import DenseMatrix  # type: ignore
 
 import System
 from System import Double, Array
@@ -62,14 +62,17 @@ class M4I_Matrix(DenseMatrix):
     def __setitem__(self, key, value):
         if isinstance(key, tuple):
             (row, cols) = key
-    #         if isinstance(row, slice) and isinstance(cols, slice):
-    #             if row.step or cols.step:
-    #                 raise NotImplementedError("'step' in slice not implemented.")
-    #             return self.SubMatrix(row.start, row.stop - row.start + 1, 
-    #                                   cols.start, cols.stop - cols.start + 1)
+            if isinstance(row, slice) and isinstance(cols, slice):
+                if row.step or cols.step:
+                    raise NotImplementedError("'step' in slice not implemented.")
+                if (((row.stop - row.start + 1) != value.RowCount) or 
+                    ((cols.stop - cols.start +1) != value.ColumnCount)):
+                    raise IndexError("source and destination must have the same dimensions.")
+                return self.SetSubMatrix(row.start, cols.start, value)
             super().__setitem__(row, cols, value)
         else:
-            raise TypeError(f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__}") # type: ignore
+            raise TypeError(
+                f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__} and value must be a Matrix") # type: ignore
         
     
 class MatrixD3x3(M4I_Matrix):
@@ -86,9 +89,7 @@ class MatrixD3x3(M4I_Matrix):
             self[1,0] = arg0[1][0]; self[1,1] = arg0[1][1]; self[1,2] = arg0[1][2]
             self[2,0] = arg0[2][0]; self[2,1] = arg0[2][1]; self[2,2] = arg0[2][2]
         elif type(arg0) == int or type(arg0) == float:
-            self[0,0] = arg0; self[0,1] = arg0; self[0,2] = arg0
-            self[1,0] = arg0; self[1,1] = arg0; self[1,2] = arg0
-            self[2,0] = arg0; self[2,1] = arg0; self[2,2] = arg0
+            super(MatrixD3x3, self).__init__(3, 3, arg0)
         else:
             raise IndexError("The list should be 3x3, or the argument should be int or float.")
         self.__column_count = 3
