@@ -45,6 +45,19 @@ class M4I_Matrix(DenseMatrix):
         self.rank = self.Rank
         self.range = self.Range
 
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return super().__getitem__(key)
+        elif isinstance(key, tuple):
+            (row, cols) = key
+            if isinstance(row, slice) and isinstance(cols, slice):
+                if row.step or cols.step:
+                    raise NotImplementedError("'step' in slice not implemented.")
+                return self.SubMatrix(row.start, row.stop - row.start + 1, cols.start, cols.stop - cols.start + 1)
+            return super().__getitem__(row, cols)
+        else:
+            raise TypeError(f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__}") # type: ignore
+        
     
 class MatrixD3x3(M4I_Matrix):
     def __new__(self, arg0):

@@ -1,0 +1,19 @@
+from M4I import Matrix3, Matrix4, Vector3, Precision, Roots, SG
+
+O = Matrix3(0)
+O.from_list([[1,1,1],
+             [1,2,3],
+             [4,3,2]])
+
+print(O[1, 1])
+
+S = Matrix4(1.0)
+
+S.from_list([[1,1,1,2],
+             [1,2,3,5],
+             [4,3,2,6],
+             [9,2,4,5]
+             ])
+
+print(S[2, 1])
+print(S[1:2, 1:2])
