@@ -1,6 +1,6 @@
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join([str(num) for num in __version_info__])
-__version__ = __version__ + '-alpha2'
+__version__ = __version__ + '-alpha3'
 __author__ = "RLee"
 __repository__ = "https://github.com/Rlee13/M4I"
 
@@ -25,7 +25,6 @@ from . import m4i_settings as SG
 import sys, os
 try:
     sys.path.append(os.getcwd() + os.sep + SG.ASSEMBLIES_PATH)
-    # print(os.getcwd() + os.sep + SG.ASSEMBLIES_PATH)
     import clr
     clr.AddReference('MathNet.Numerics')
 except IOError:

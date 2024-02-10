@@ -12,7 +12,7 @@ except IOError:
     print (dependencies)
     sys.exit()
 
-from MathNet.Numerics import Precision
+from MathNet.Numerics import Precision  # type: ignore
 
 # The number of significant decimal places of double-precision floating numbers (64 bit).
 DOUBLE_DECIMAL_PLACES = Precision.DoubleDecimalPlaces
