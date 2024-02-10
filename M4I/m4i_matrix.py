@@ -202,3 +202,48 @@ class MatrixD4x4(M4I_Matrix):
             for j, col in enumerate(row):
                 self[i, j] = col
         return self
+    
+
+class MatrixDnxn(M4I_Matrix):
+    def __new__(self, rows, columns, arg0):
+        print ("MatrixDnxn Creating Instance", rows, columns, arg0)
+        __instance = super(MatrixDnxn, self).__new__(self, rows, columns, Array[Double]([arg0 for n in range(rows * columns)]))
+        return __instance
+
+    def __init__(self, rows, columns, arg0):
+        # print ("__init__MatrixDnxn", arg0)
+        super(MatrixDnxn, self).__init__(rows, columns, arg0)
+        self.__column_count = columns
+        self.__row_count = rows
+
+    #def __repr__(self):
+    #    return "Test()"
+
+    # def __str__(self):
+    #    return str(self[i,j] for i in self for j in self[0,:])
+
+    @property
+    def column_count(self):
+        return self.__column_count
+
+    @property
+    def row_count(self):
+        return self.__row_count
+
+    def clear(self):
+        self.ClearRow(0); self.ClearRow(1); self.ClearRow(2); self.ClearRow(3)
+        return self
+
+    def from_list(self, alist):
+        if not type(alist) == list: raise IndexError(f"List should be {self.row_count}x{self.column_count}")  # type: ignore
+        if any([len(alist[x]) != self.column_count for x in range(self.row_count)]):
+            raise IndexError(f"List should be {self.row_count}x{self.column_count}")  # type: ignore
+            # len(alist) != 4 or \
+            # len(alist[0]) != 4 or \
+            # len(alist[1]) != 4 or \
+            # len(alist[2]) != 4 or \
+            # len(alist[3]) != 4 :
+        for i, row in enumerate(alist):
+            for j, col in enumerate(row):
+                self[i, j] = col
+        return self

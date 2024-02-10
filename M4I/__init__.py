@@ -36,6 +36,7 @@ from . import m4i_matrix, m4i_vector, m4i_root_finding, m4i_precision
 
 Matrix3 = m4i_matrix.MatrixD3x3
 Matrix4 = m4i_matrix.MatrixD4x4
+MatrixN = m4i_matrix.MatrixDnxn
 Vector3 = m4i_vector.Vector3
 Roots = m4i_root_finding.M4I_Roots
 Precision = m4i_precision
