@@ -1,10 +1,10 @@
-from M4I import MatrixN
+from M4I import MatrixD3, MatrixDMN
 
-O = MatrixN(5, 5, 3)
+O = MatrixDMN(5, 5, 3)
 print(O)
 print(O[1:3, 1:3])
 
-S = MatrixN(5, 5, 0)
+S = MatrixDMN(5, 5, 0)
 S.from_list([[1,1,1,2,2],
              [1,2,3,5,5],
              [4,3,2,6,6],
@@ -13,3 +13,10 @@ S.from_list([[1,1,1,2,2],
              ])
 
 print(S)
+
+
+M = MatrixD3(1.75)
+O = MatrixD3(3)
+ret = O + M
+print(f"type:: {type(ret)}::: O + M {ret}")  # type: ignore
+print(ret[1:2, 1:2])

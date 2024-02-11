@@ -1,7 +1,7 @@
-from M4I import Matrix3, Matrix4, Vector3, Precision, Roots, SG
+from M4I import MatrixD3, MatrixD4, Vector3, Precision, Roots, SG
 
-O = Matrix3(0)
-P = Matrix3(1)
+O = MatrixD3(0)
+P = MatrixD3(1)
 R = Vector3(0)
 print(O)
 print(P)
@@ -27,7 +27,7 @@ print(O.determinant())
 print(O * R)
 
 print("TYPE::", type(O))
-print("ISINSTANCE of Matrix3::", isinstance(O, Matrix3))
+print("ISINSTANCE of MatrixD3::", isinstance(O, MatrixD3))
 
 print(O - P)
 
@@ -42,7 +42,7 @@ print(O)
 R = Vector3([0.0,1.0,2.0])
 print(R)
 
-S = Matrix4(1.0)
+S = MatrixD4(1.0)
 print(S)
 
 S.from_list([[1,1,1,2],

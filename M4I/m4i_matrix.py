@@ -1,8 +1,5 @@
 import sys, clr
 
-errorStrings = [
-    "Error :: Index error, list should be 3x3"
-    ]
 
 dependencies = ''' 
 
@@ -28,7 +25,7 @@ class M4I_Matrix(DenseMatrix):
         return __instance
 
     def __init__(self, rows, columns, arg0):
-        super(M4I_Matrix, self).__init__()
+        # super(M4I_Matrix, self).__init__()
 
         self.I = self.Inverse
         self.inverse = self.Inverse
@@ -69,13 +66,23 @@ class M4I_Matrix(DenseMatrix):
         else:
             raise TypeError(
                 f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__} and value must be a Matrix") # type: ignore
-        
+
+    def __add__(self, dns_matrix):
+       _ret = type(self)(0)
+       self.Add(dns_matrix, _ret)
+       return _ret
+            
+    def __sub__(self, dns_matrix):
+       _ret = type(self)(0)
+       self.Subtract(dns_matrix, _ret)
+       return _ret
+            
     
 class MatrixD3x3(M4I_Matrix):
     """
     A class which represents a 3x3 matrix with elements of type 'double'.
         Usage:
-            ret = Matrix3(arg)
+            ret = MatrixD3(arg)
         Parameters:
             arg (int/float): A integer/float
         Returns:
@@ -84,17 +91,20 @@ class MatrixD3x3(M4I_Matrix):
             from_list: initialize the Matrix from the content of a list of lists.
     """
     def __new__(self, arg0):
-        __instance = super(MatrixD3x3, self).__new__(self, 3, 3, Array[Double]((0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)))
+        __instance = super(MatrixD3x3, self).__new__(self, 3, 3, Array[Double]([0.0 for x in range(9)]))
         return __instance
 
     def __init__(self, arg0):
-        super(MatrixD3x3, self).__init__(3, 3, Array[Double]((0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)))
+        super(MatrixD3x3, self).__init__(3, 3, Array[Double]([0.0 for x in range(9)]))
         if type(arg0) == list and len(arg0) == 3 and len(arg0[0]) == 3 and len(arg0[1]) == 3 and len(arg0[2]) == 3 :
             self[0,0] = arg0[0][0]; self[0,1] = arg0[0][1]; self[0,2] = arg0[0][2]
             self[1,0] = arg0[1][0]; self[1,1] = arg0[1][1]; self[1,2] = arg0[1][2]
             self[2,0] = arg0[2][0]; self[2,1] = arg0[2][1]; self[2,2] = arg0[2][2]
         elif type(arg0) == int or type(arg0) == float:
-            super(MatrixD3x3, self).__init__(3, 3, arg0)
+            # super(MatrixD3x3, self).__init__(3, 3, arg0)
+            self[0,0] = arg0; self[0,1] = arg0; self[0,2] = arg0
+            self[1,0] = arg0; self[1,1] = arg0; self[1,2] = arg0
+            self[2,0] = arg0; self[2,1] = arg0; self[2,2] = arg0
         else:
             raise IndexError("The list should be 3x3, or the argument should be int or float.")
         self.__column_count = 3
@@ -134,7 +144,7 @@ class MatrixD4x4(M4I_Matrix):
     """
     A class which represents a 4x4 matrix with elements of type 'double'.
         Usage:
-            ret = Matrix4(arg)
+            ret = MatrixD4(arg)
         Parameters:
             arg (int/float): A integer/float
         Returns:
@@ -143,18 +153,22 @@ class MatrixD4x4(M4I_Matrix):
             from_list: initialize the Matrix from the content of a list of lists.
     """    
     def __new__(self, arg0):
-        __instance = super(MatrixD4x4, self).__new__(self, 4, 4, Array[Double]((0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)))
+        __instance = super(MatrixD4x4, self).__new__(self, 4, 4, Array[Double]([0.0 for x in range(16)]))
         return __instance
 
     def __init__(self, arg0):
-        super(MatrixD4x4, self).__init__(4, 4, Array[Double]((0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0)))
+        super(MatrixD4x4, self).__init__(4, 4, Array[Double]([0.0 for x in range(16)]))
         if type(arg0) == list and len(arg0) == 4 and len(arg0[0]) == 4 and len(arg0[1]) == 4 and len(arg0[2]) == 4 and len(arg0[3]) == 4 :
             self[0,0] = arg0[0][0]; self[0,1] = arg0[0][1]; self[0,2] = arg0[0][2]; self[0,3] = arg0[0][3]
             self[1,0] = arg0[1][0]; self[1,1] = arg0[1][1]; self[1,2] = arg0[1][2]; self[1,3] = arg0[1][3]
             self[2,0] = arg0[2][0]; self[2,1] = arg0[2][1]; self[2,2] = arg0[2][2]; self[2,3] = arg0[2][3]
             self[3,0] = arg0[3][0]; self[3,1] = arg0[3][1]; self[3,2] = arg0[3][2]; self[3,3] = arg0[3][3]
         elif type(arg0) == int or type(arg0) == float:
-            super(MatrixD4x4, self).__init__(4, 4, arg0)
+            # super(MatrixD4x4, self).__init__(4, 4, arg0)
+            self[0,0] = arg0; self[0,1] = arg0; self[0,2] = arg0; self[0,3] = arg0
+            self[1,0] = arg0; self[1,1] = arg0; self[1,2] = arg0; self[1,3] = arg0
+            self[2,0] = arg0; self[2,1] = arg0; self[2,2] = arg0; self[2,3] = arg0
+            self[3,0] = arg0; self[3,1] = arg0; self[3,2] = arg0; self[3,3] = arg0   
         else:
             raise IndexError("The list should be 4x4, or the argument should be int or float.")
         self.__column_count = 4
@@ -192,26 +206,26 @@ class MatrixD4x4(M4I_Matrix):
         return self
     
 
-class MatrixDnxn(M4I_Matrix):
+class MatrixDmxn(M4I_Matrix):
     """
-    A class which represents a n x m matrix with elements of type 'double'.
+    A class which represents a m x n matrix with elements of type 'double'.
         Usage:
-            ret = MatrixN(rows, columns, arg)
+            ret = MatrixDMN(rows, columns, arg)
         Parameters:
             rows (int): A integer representing the number of rows
             columns (int): A integer representing the number of columns
             arg (int/float): A integer/float
         Returns:
-            a n x m Matrix with all elements initialized with 'arg' value
+            a m x n Matrix with all elements initialized with 'arg' value
         Methods:
             from_list: initialize the Matrix from the content of a list of lists.
     """
     def __new__(self, rows, columns, arg0):
-        __instance = super(MatrixDnxn, self).__new__(self, rows, columns, Array[Double]([arg0 for n in range(rows * columns)]))
+        __instance = super(MatrixDmxn, self).__new__(self, rows, columns, Array[Double]([arg0 for n in range(rows * columns)]))
         return __instance
 
     def __init__(self, rows, columns, arg0):
-        super(MatrixDnxn, self).__init__(rows, columns, arg0)
+        # super(MatrixDmxn, self).__init__(rows, columns, arg0)
         self.__column_count = columns
         self.__row_count = rows
 
@@ -225,7 +239,7 @@ class MatrixDnxn(M4I_Matrix):
 
     def from_list(self, alist):
         """
-        Initialize a n x n Matrix from the content of a list of lists. 
+        Initialize a m x n Matrix from the content of a list of lists. 
         The matrix has to be initialized first.
         Example for a 5x5 matrix:
             S.from_list([[1,1,1,2,2],

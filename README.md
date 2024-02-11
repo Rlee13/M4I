@@ -2,7 +2,7 @@
 
 IronPython interface classes to MathNet.Numerics.
 
-Implements (among others) 3x3 Matrix (Matrix3), 4x4 Matrix (Matrix4) and nxn Matrix (MatrixN).
+Implements (among others) 3x3 Matrix (MatrixD3), 4x4 Matrix (MatrixD4) and nxn Matrix (MatrixDMN).
 Allows working with python's slice objects, i.e. one can do 
 
 ```python
