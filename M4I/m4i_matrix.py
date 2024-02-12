@@ -27,6 +27,9 @@ class M4I_Matrix(DenseMatrix):
     def __init__(self, rows, columns, arg0):
         # super(M4I_Matrix, self).__init__()
 
+        self.__column_count = columns
+        self.__row_count = rows
+
         self.I = self.Inverse
         self.inverse = self.Inverse
 
@@ -38,6 +41,16 @@ class M4I_Matrix(DenseMatrix):
 
         self.clear = self.Clear
 
+    @property
+    def column_count(self):
+        # return self.__column_count
+        return self.ColumnCount
+
+    @property
+    def row_count(self):
+        # return self.__row_count
+        return self.RowCount
+    
     def __getitem__(self, key):
         if isinstance(key, int):
             return super().__getitem__(key)
@@ -46,8 +59,12 @@ class M4I_Matrix(DenseMatrix):
             if isinstance(row, slice) and isinstance(cols, slice):
                 if row.step or cols.step:
                     raise NotImplementedError("'step' in slice not implemented.")
-                return self.SubMatrix(row.start, row.stop - row.start + 1, 
-                                      cols.start, cols.stop - cols.start + 1)
+                _nrows = row.stop - row.start + 1
+                _ncols = cols.stop - cols.start + 1
+                _ret = MatrixDmxn(_nrows, _ncols, 0)
+                self.SubMatrix(row.start, _nrows, 
+                                      cols.start, _ncols).CopyTo(_ret)
+                return _ret
             return super().__getitem__(row, cols)
         else:
             raise TypeError(f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__}") # type: ignore
@@ -61,19 +78,23 @@ class M4I_Matrix(DenseMatrix):
                 if (((row.stop - row.start + 1) != value.RowCount) or 
                     ((cols.stop - cols.start +1) != value.ColumnCount)):
                     raise IndexError("source and destination must have the same dimensions.")
-                return self.SetSubMatrix(row.start, cols.start, value)
-            super().__setitem__(row, cols, value)
+                # _ret = MatrixDmxn(value.RowCount + 1, value.ColumnCount + 1, 0)
+                self.SetSubMatrix(row.start, cols.start, value)
+                # self.CopyTo(_ret)
+            else:
+                super().__setitem__(row, cols, value)
         else:
             raise TypeError(
                 f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__} and value must be a Matrix") # type: ignore
 
     def __add__(self, dns_matrix):
-       _ret = type(self)(0)
+       print(type(self), type(dns_matrix))
+       _ret = type(self)(self.row_count, self.column_count, 0)
        self.Add(dns_matrix, _ret)
        return _ret
             
     def __sub__(self, dns_matrix):
-       _ret = type(self)(0)
+       _ret = type(self)(self.row_count, self.column_count,0)
        self.Subtract(dns_matrix, _ret)
        return _ret
             
@@ -109,14 +130,15 @@ class MatrixD3x3(M4I_Matrix):
             raise IndexError("The list should be 3x3, or the argument should be int or float.")
         self.__column_count = 3
         self.__row_count = 3
+        self.__class__ = MatrixDmxn
 
-    @property
-    def column_count(self):
-        return self.__column_count
+    # @property
+    # def column_count(self):
+    #     return self.__column_count
 
-    @property
-    def row_count(self):
-        return self.__row_count
+    # @property
+    # def row_count(self):
+    #     return self.__row_count
 
     def from_list(self, alist):
         """
@@ -137,6 +159,7 @@ class MatrixD3x3(M4I_Matrix):
         for i, row in enumerate(alist):
             for j, col in enumerate(row):
                 self[i, j] = col
+        
         return self
 
 
@@ -173,14 +196,15 @@ class MatrixD4x4(M4I_Matrix):
             raise IndexError("The list should be 4x4, or the argument should be int or float.")
         self.__column_count = 4
         self.__row_count = 4
+        self.__class__ = MatrixDmxn
 
-    @property
-    def column_count(self):
-        return self.__column_count
+    # @property
+    # def column_count(self):
+    #     return self.__column_count
 
-    @property
-    def row_count(self):
-        return self.__row_count
+    # @property
+    # def row_count(self):
+    #     return self.__row_count
 
     def from_list(self, alist):
         """
@@ -229,13 +253,13 @@ class MatrixDmxn(M4I_Matrix):
         self.__column_count = columns
         self.__row_count = rows
 
-    @property
-    def column_count(self):
-        return self.__column_count
+    # @property
+    # def column_count(self):
+    #     return self.__column_count
 
-    @property
-    def row_count(self):
-        return self.__row_count
+    # @property
+    # def row_count(self):
+    #     return self.__row_count
 
     def from_list(self, alist):
         """

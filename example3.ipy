@@ -1,22 +1,26 @@
 from M4I import MatrixD3, MatrixDMN
 
-O = MatrixDMN(5, 5, 3)
-print(O)
-print(O[1:3, 1:3])
+# O = MatrixDMN(5, 5, 3)
+# print(O)
+# print(O[1:3, 1:3])
 
-S = MatrixDMN(5, 5, 0)
-S.from_list([[1,1,1,2,2],
-             [1,2,3,5,5],
-             [4,3,2,6,6],
-             [7,5,6,8,8],
-             [9,2,4,5,5]
-             ])
+# S = MatrixDMN(5, 5, 0)
+# S.from_list([[1,1,1,2,2],
+#              [1,2,3,5,5],
+#              [4,3,2,6,6],
+#              [7,5,6,8,8],
+#              [9,2,4,5,5]
+#              ])
 
-print(S)
+# print(S)
 
 
 M = MatrixD3(1.75)
 O = MatrixD3(3)
 ret = O + M
-print(f"type:: {type(ret)}::: O + M {ret}")  # type: ignore
-print(ret[1:2, 1:2])
+print(f"type:: {type(ret)}::: \nO + M \n{ret}")  # type: ignore
+
+ret = ret[1:2, 1:2]
+print("NEW TYPE", type(ret))
+print(ret)
+
