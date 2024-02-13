@@ -1,6 +1,6 @@
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join([str(num) for num in __version_info__])
-__version__ = __version__ + '-alpha5'
+__version__ = __version__ + '-alpha6'
 __author__ = "RLee"
 __repository__ = "https://github.com/Rlee13/M4I"
 

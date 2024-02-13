@@ -43,12 +43,10 @@ class M4I_Matrix(DenseMatrix):
 
     @property
     def column_count(self):
-        # return self.__column_count
         return self.ColumnCount
 
     @property
     def row_count(self):
-        # return self.__row_count
         return self.RowCount
     
     def __getitem__(self, key):
@@ -78,9 +76,7 @@ class M4I_Matrix(DenseMatrix):
                 if (((row.stop - row.start + 1) != value.RowCount) or 
                     ((cols.stop - cols.start +1) != value.ColumnCount)):
                     raise IndexError("source and destination must have the same dimensions.")
-                # _ret = MatrixDmxn(value.RowCount + 1, value.ColumnCount + 1, 0)
                 self.SetSubMatrix(row.start, cols.start, value)
-                # self.CopyTo(_ret)
             else:
                 super().__setitem__(row, cols, value)
         else:
@@ -88,7 +84,6 @@ class M4I_Matrix(DenseMatrix):
                 f"{type(self).__name__} indices must be integers or slices, not {type(key).__name__} and value must be a Matrix") # type: ignore
 
     def __add__(self, dns_matrix):
-       print(type(self), type(dns_matrix))
        _ret = type(self)(self.row_count, self.column_count, 0)
        self.Add(dns_matrix, _ret)
        return _ret
@@ -97,8 +92,25 @@ class M4I_Matrix(DenseMatrix):
        _ret = type(self)(self.row_count, self.column_count,0)
        self.Subtract(dns_matrix, _ret)
        return _ret
-            
-    
+
+    def __mul__(self, value):
+        _ret = type(self)(self.row_count, self.column_count,0)
+        if isinstance(value, (float, int)):
+            self.Multiply(value, _ret)
+            return _ret
+        else:
+            return super().__mul__(self, value)
+
+    def __truediv__(self, value):
+        _ret = type(self)(self.row_count, self.column_count,0)
+        if isinstance(value, (float, int)):
+            self.Divide(value, _ret)
+            return _ret
+        else:
+            return super().__truediv__(self, value)
+                           
+    # __rmul__ = __mul__
+
 class MatrixD3x3(M4I_Matrix):
     """
     A class which represents a 3x3 matrix with elements of type 'double'.
@@ -132,13 +144,6 @@ class MatrixD3x3(M4I_Matrix):
         self.__row_count = 3
         self.__class__ = MatrixDmxn
 
-    # @property
-    # def column_count(self):
-    #     return self.__column_count
-
-    # @property
-    # def row_count(self):
-    #     return self.__row_count
 
     def from_list(self, alist):
         """
@@ -198,13 +203,6 @@ class MatrixD4x4(M4I_Matrix):
         self.__row_count = 4
         self.__class__ = MatrixDmxn
 
-    # @property
-    # def column_count(self):
-    #     return self.__column_count
-
-    # @property
-    # def row_count(self):
-    #     return self.__row_count
 
     def from_list(self, alist):
         """
@@ -253,13 +251,6 @@ class MatrixDmxn(M4I_Matrix):
         self.__column_count = columns
         self.__row_count = rows
 
-    # @property
-    # def column_count(self):
-    #     return self.__column_count
-
-    # @property
-    # def row_count(self):
-    #     return self.__row_count
 
     def from_list(self, alist):
         """
