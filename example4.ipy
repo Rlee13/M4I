@@ -1,0 +1,13 @@
+from M4I import MatrixDMN, delete
+
+S = MatrixDMN(5, 5, 0)
+S.from_list([[1,1,1,2,2],
+             [1,2,3,5,5],
+             [4,3,2,6,6],
+             [7,5,6,8,8],
+             [9,2,4,5,5]
+             ])
+print(S)
+
+ret = delete(S, 1, 1)
+print(type(ret), ret)

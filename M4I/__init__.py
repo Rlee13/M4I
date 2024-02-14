@@ -1,6 +1,6 @@
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join([str(num) for num in __version_info__])
-__version__ = __version__ + '-alpha7'
+__version__ = __version__ + '-alpha8'
 __author__ = "RLee"
 __repository__ = "https://github.com/Rlee13/M4I"
 
@@ -40,6 +40,6 @@ VectorD3 = m4i_vector.VectorD3
 VectorDM = m4i_vector.VectorDM
 Roots = m4i_root_finding.M4I_Roots
 Precision = m4i_precision
-
+delete = m4i_matrix.delete
 
 
