@@ -14,6 +14,7 @@ except IOError:
     sys.exit()
 
 from MathNet.Numerics.LinearAlgebra.Double import DenseMatrix  # type: ignore
+from .m4i_vector import VectorDM
 
 import System
 from System import Double, Array
@@ -57,8 +58,9 @@ class M4I_Matrix(DenseMatrix):
             if isinstance(row, slice) and isinstance(cols, slice):
                 if row.step or cols.step:
                     raise NotImplementedError("'step' in slice not implemented.")
-                _nrows = row.stop - row.start + 1
-                _ncols = cols.stop - cols.start + 1
+                # print("__getitem__ ", row.stop , cols.stop)
+                _nrows = row.stop - row.start #+ 1
+                _ncols = cols.stop - cols.start #+ 1
                 _ret = MatrixDmxn(_nrows, _ncols, 0)
                 self.SubMatrix(row.start, _nrows, 
                                       cols.start, _ncols).CopyTo(_ret)
@@ -73,8 +75,11 @@ class M4I_Matrix(DenseMatrix):
             if isinstance(row, slice) and isinstance(cols, slice):
                 if row.step or cols.step:
                     raise NotImplementedError("'step' in slice not implemented.")
-                if (((row.stop - row.start + 1) != value.RowCount) or 
-                    ((cols.stop - cols.start +1) != value.ColumnCount)):
+                # print("__setitem__ ", row.stop , cols.stop)
+                # if (((row.stop - row.start + 1) != value.RowCount) or 
+                #     ((cols.stop - cols.start +1) != value.ColumnCount)):
+                if (((row.stop - row.start) != value.RowCount) or 
+                    ((cols.stop - cols.start) != value.ColumnCount)):
                     raise IndexError("source and destination must have the same dimensions.")
                 self.SetSubMatrix(row.start, cols.start, value)
             else:
@@ -94,8 +99,12 @@ class M4I_Matrix(DenseMatrix):
        return _ret
 
     def __mul__(self, value):
-        _ret = type(self)(self.row_count, self.column_count,0)
         if isinstance(value, (float, int)):
+            _ret = type(self)(self.row_count, self.column_count,0)
+            self.Multiply(value, _ret)
+            return _ret
+        if isinstance(value, VectorDM):
+            _ret = VectorDM(self.row_count, 0)
             self.Multiply(value, _ret)
             return _ret
         else:

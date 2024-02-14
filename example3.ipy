@@ -1,8 +1,22 @@
-from M4I import MatrixD3, MatrixDMN
+from M4I import MatrixD3, MatrixDMN, VectorDM
+
+V = VectorDM(5, 0)
+print(V)
+V.from_list([1,2,3,4,5])
+print(V)
+
+O = MatrixDMN(5, 1, 3)
+print(O)
+
+ret = input("Press any key to continue...")
 
 O = MatrixDMN(5, 5, 3)
-print(O)
-print(O[1:3, 1:3])
+
+R = MatrixDMN(2, 2, 0)
+ret = MatrixDMN(2, 2, 0)
+R.from_list([[1,2],
+             [9,4]
+             ])
 
 S = MatrixDMN(5, 5, 0)
 S.from_list([[1,1,1,2,2],
@@ -13,7 +27,11 @@ S.from_list([[1,1,1,2,2],
              ])
 
 print(S)
+print(S[1:3, 1:3])
+S[1:3, 1:3] = ret
+print(S)
 
+ret = input("Press any key to continue...")
 
 M = MatrixD3(1.75)
 O = MatrixD3(3)
