@@ -40,6 +40,77 @@ VectorD3 = m4i_vector.VectorD3
 VectorDM = m4i_vector.VectorDM
 Roots = m4i_root_finding.M4I_Roots
 Precision = m4i_precision
-delete = m4i_matrix.delete
 
-
+def delete(arr, obj, axis = None):
+    """
+    Returns an MatrixDmxn with sub-rows/columns specified by obj deleted. 
+    For a VectorDM or one dimensional MatrixDmxn, the axis parameter is ignored.
+    Parameters:
+        arr : Input matrix or vector.
+        obj: A slice, a int or list of integers - indicates indices to remove along the 
+            specified axis.
+        axis: An integer, optional - for axis = 0 or 1, the removal of items is done 
+            by row or by column respectively. 
+        If axis = None, removal of items is applied to the flattened array (Not Implemented).
+    Returns:
+        out_matrix :  MatrixDmxn or VectorDM - a copy of arr with the elements specified 
+            by obj removed. 
+    """
+    if isinstance(arr, MatrixDMN):
+        _ret = None
+        if axis == 0:
+            if isinstance(obj, int):
+                _ret = arr.RemoveRow(obj)
+                _ret0 = MatrixDMN(_ret.RowCount, _ret.ColumnCount,0)
+                _ret.CopyTo(_ret0)
+                return _ret0
+            elif isinstance(obj, list):
+                i = 0
+                if len(obj) == 0: return arr
+                _ret = MatrixDMN(arr.RowCount - len(obj), arr.ColumnCount,0)
+                for x in range(arr.RowCount):
+                    if x not in obj:
+                        _ret.SetRow(i, arr.Row(x))
+                        i += 1
+                return _ret
+        elif axis == 1:
+            if isinstance(obj, int):
+                _ret = arr.RemoveColumn(obj)
+                _ret0 = MatrixDMN(_ret.RowCount, _ret.ColumnCount,0)
+                _ret.CopyTo(_ret0)
+                return _ret0
+            elif isinstance(obj, list):
+                i = 0
+                if len(obj) == 0: return arr
+                _ret = MatrixDMN(arr.RowCount, arr.ColumnCount - len(obj),0)
+                for x in range(arr.ColumnCount):
+                    if x not in obj:
+                        _ret.SetColumn(i, arr.Column(x))
+                        i += 1
+                return _ret
+        else:
+            raise NotImplementedError(f"Flattened array is not implemented.") # type : ignore
+        
+    elif isinstance(arr, VectorDM):
+        _ret = []
+        if isinstance(obj, int):
+            for i, x in enumerate(arr):
+                if i != obj: _ret.append(x)
+            _v = VectorDM(len(arr) - 1, 0)
+            _v.from_list(_ret)
+            return _v
+        elif isinstance(obj, list):
+            for i, x in enumerate(arr):
+                if i not in obj: _ret.append(x)
+            # print(len(arr), len(_ret))
+            _v = VectorDM(len(_ret), 0)
+            _v.from_list(_ret)
+            return _v
+        elif isinstance(obj, slice):
+            [_ret.append(x) for x in arr]
+            del _ret[obj]
+            _v = VectorDM(len(_ret), 0)
+            _v.from_list(_ret)
+            return _v
+    else:
+        raise NotImplementedError(f"delete is not implemented for {type(arr)}.") # type : ignore

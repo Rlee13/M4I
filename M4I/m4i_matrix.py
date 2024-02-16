@@ -19,34 +19,11 @@ from .m4i_vector import VectorDM
 import System
 from System import Double, Array
 
-def delete(arr, obj, axis = None):
-    if isinstance(arr, MatrixDmxn):
-        _ret = None
-        if axis == 0:
-            if isinstance(obj, int):
-                _ret = arr.RemoveRow(obj)
-                _ret0 = MatrixDmxn(_ret.RowCount, _ret.ColumnCount,0)
-                _ret.CopyTo(_ret0)
-            elif isinstance(obj, list):
-                for x in obj:
-                    _ret = arr.RemoveRow(x)
-                _ret0 = MatrixDmxn(_ret.RowCount, _ret.ColumnCount,0)
-                _ret.CopyTo(_ret0)
-        elif axis == 1:
-            if isinstance(obj, int):
-                _ret = arr.RemoveColumn(obj)
-                _ret0 = MatrixDmxn(_ret.RowCount, _ret.ColumnCount,0)
-                _ret.CopyTo(_ret0)
-            elif isinstance(obj, list):
-                for x in obj:
-                    _ret = arr.RemoveColumn(x)
-                _ret0 = MatrixDmxn(_ret.RowCount, _ret.ColumnCount,0)
-                _ret.CopyTo(_ret0)
-        else:
-            raise NotImplementedError(f"Flattened array is not implemented.") # type : ignore
-    return _ret0
 
 class M4I_Matrix(DenseMatrix):
+    """
+    Base class for M4I
+    """
     def __new__(self, rows, columns, arg0):
         __instance = super(M4I_Matrix, self).__new__(self, rows, columns, arg0)
         return __instance
