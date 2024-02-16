@@ -12,7 +12,7 @@ to print the content of matrix S between row 1 and 2 and column 1 and 2.
 
 For a gain in speed use MathNet.Numerics classes directly.
 
-See the examples provided for usage.
+For usage, see the examples provided.
 
 M4I is currently in an Alpha state of development.
 
