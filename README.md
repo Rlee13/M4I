@@ -1,6 +1,6 @@
 # M4I
 
-IronPython interface classes to MathNet.Numerics. The intention is to quickly port numpy matrices to IronPython (allows the use of python slices objects).
+IronPython interface classes to MathNet.Numerics. The intention is to quickly port numpy matrices to IronPython (and allow the use of python slices objects).
 
 Implements (among others) 3x3 Matrix (MatrixD3), 4x4 Matrix (MatrixD4) and m x n Matrix (MatrixDMN).
 Allows working with python's slice objects, i.e. one can do 
